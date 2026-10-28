@@ -1,0 +1,19 @@
+# Core (pinned so an upgrade can't break you mid-quest)
+robotframework==7.5
+robotframework-seleniumlibrary==6.9.0
+
+# Code quality: linter + formatter (robocop check / robocop format)
+robotframework-robocop
+
+# RobotCode command line: runs robot.toml profiles (Level 4)
+robotcode[runner,analyze]
+
+# Test data
+robotframework-faker
+robotframework-datadriver
+
+# API testing (Level 9)
+robotframework-requests
+
+# Parallel runs (Level 10)
+robotframework-pabot
