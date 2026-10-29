@@ -1,0 +1,19 @@
+# Python virtual environment
+.venv/
+
+# Robot Framework run output
+results/
+log.html
+report.html
+output.xml
+
+# Python cache
+__pycache__/
+*.pyc
+
+# PyCharm settings (personal)
+.idea/
+
+# Secrets and personal config (Level 4)
+.env
+.robot.toml
