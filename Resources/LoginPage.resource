@@ -1,9 +1,8 @@
 *** Settings ***
-Library    SeleniumLibrary
+Library    SeleniumLibrary    timeout=5s
 Library    String
 
 *** Variables ***
-${TIMEOUT}    5s
 ${LOC_USERNAME}    //input[@name='username']
 ${LOC_PASSWORD}    //input[@name='password']
 ${LOC_LOGIN}    //input[@value='Log In' and @class='button']
@@ -21,32 +20,22 @@ Open Login Page & Verify Title
 Customer Login with Credentials
     [Documentation]    Keyword used for Login the Bank Website using Customer Credenatials
     [Arguments]    ${Username}    ${Password}
-    Wait Until Element Is Visible    ${LOC_USERNAME}    ${TIMEOUT}
-    Clear Element Text    ${LOC_USERNAME}
+    Wait Until Element Is Visible    ${LOC_USERNAME}
     Input Text    ${LOC_USERNAME}    ${Username}
-    Wait Until Element Is Visible    ${LOC_PASSWORD}    ${TIMEOUT}
-    Clear Element Text    ${LOC_PASSWORD}
     Input Password    ${LOC_PASSWORD}    ${Password}
-    Wait Until Element Is Visible    ${LOC_LOGIN}    ${TIMEOUT}
+    Wait Until Element Is Visible    ${LOC_LOGIN}
     Click Button    ${LOC_LOGIN}
-    Run Keyword And Return    Login Succesfull or Not
-
-Login Succesfull or Not
-    [Documentation]     Keyword used After Lofing Button Clicked to Check if Login Successful or Error Message Received
-    ${Logged_In}=    Run Keyword And Return Status    Title Should Be    ParaBank | Accounts Overview
-    IF    not ${Logged_In}
-        ${error}=    Get Text    ${LOC_ERROR}
-        Fail    Login failed. The bank said: ${error}
-    END
-
 
 Clicking On Link and Page Title Finding
     [Documentation]    Keyword Help click on Link and Checking Title
     [Arguments]    ${Link_Text}    ${Expected_Title}
     ${Locator}=    Replace String    ${LOC_LINK}    <<>>    ${Link_Text}
-    Wait Until Element Is Visible    ${Locator}    ${TIMEOUT}
+    Wait Until Element Is Visible    ${Locator}
     Click Element    ${Locator}
     Title Should Be    ${Expected_Title}
-    ${Title_Found}=    Get Title
-    Log    ${Title_Found}
 
+Login Should Fail With
+    [Documentation]    Checks the exact error text shown after a failed login.
+    [Arguments]    ${expected_error}
+    Wait Until Element Is Visible    ${LOC_ERROR}
+    Element Text Should Be    ${LOC_ERROR}    ${expected_error}
