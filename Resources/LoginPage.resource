@@ -1,6 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary    timeout=5s
-Library    String
+Resource    ../Resources/Common.resource
 
 *** Variables ***
 ${LOC_USERNAME}    //input[@name='username']

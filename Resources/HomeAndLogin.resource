@@ -1,5 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary    timeout=10s
+Resource    ../Resources/Common.resource
 Resource    ../Resources/Register.resource
 
 *** Variables ***

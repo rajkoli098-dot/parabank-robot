@@ -1,5 +1,4 @@
 *** Settings ***
-Library           SeleniumLibrary
 Resource          ../Resources/Locators.robot
 Resource          ../Resources/LoginPage.resource
 Suite Setup       Open Browser    https://parabank.parasoft.com/parabank/index.htm    chrome

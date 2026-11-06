@@ -1,5 +1,4 @@
 *** Settings ***
-Library    SeleniumLibrary    timeout=10s
 Resource    ../Resources/HomeAndLogin.resource
 Resource    ../Resources/Register.resource
 

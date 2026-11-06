@@ -1,15 +1,12 @@
 *** Settings ***
-Library    SeleniumLibrary
 Resource    ../Resources/HomeAndLogin.resource
 Resource    ../Resources/Register.resource
 Resource    ../Resources/AccountsOverview.resource
 Suite Setup    Open Browser    ${URL}    ${BROWSER}
-#Suite Teardown    Close All Browsers
+Suite Teardown    Close All Browsers
 
 *** Variables ***
 ${MESSAGE}    Your account was created successfully. You are now logged in.
-${URL}    https://parabank.parasoft.com/parabank/index.htm
-${BROWSER}    chrome
 ${PASSWORD_ERROR_MESSAGE}    Passwords did not match.
 ${USERNAME_ERROR_MESSAGE}    This username already exists.
 

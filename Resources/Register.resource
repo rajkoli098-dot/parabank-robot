@@ -1,10 +1,7 @@
 *** Settings ***
-Library    SeleniumLibrary    timeout=10s
-Library    ../Libraries/excel_utils.py
+Resource    ../Resources/Common.resource
 
 *** Variables ***
-${FILE}    Test Data/customer_data.xlsx
-${SHEET_NAME}    Sheet1
 ${ROW_ID}    3
 ${RGISTER_XPATH}    //a[text()='Register']
 ${REGISTER_TITLE_XPATH}    //h1[@class='title']
@@ -38,7 +35,7 @@ Resgister A New Customer
     Should Be Equal    Signing up is easy!    ${Register_Message}
 
 Filling Customer Related All Details
-    &{Customer_Details}=    Get Row As Dictionary    ${FILE}    ${SHEET_NAME}    ${ROW_ID}
+    &{Customer_Details}=    Get Row As Dictionary    ${CUSTOMER_FILE}    ${SHEET}    ${ROW_ID}
     ${First_Name}=    Set Variable    ${Customer_Details}[First Name]
     ${Last_Name}=    Set Variable    ${Customer_Details}[Last Name]
     ${Address}=    Set Variable    ${Customer_Details}[Address]
@@ -86,7 +83,7 @@ Log Out is Visible For New Registered Customer
 
 Provide Confirm Password as Mismatch Value
     [Arguments]    ${Confirm_Mismatch}
-    &{Customer_Details}=    Get Row As Dictionary    ${FILE}    ${SHEET_NAME}    ${ROW_ID}
+    &{Customer_Details}=    Get Row As Dictionary    ${CUSTOMER_FILE}    ${SHEET}    ${ROW_ID}
     ${First_Name}=    Set Variable    ${Customer_Details}[First Name]
     ${Last_Name}=    Set Variable    ${Customer_Details}[Last Name]
     ${Address}=    Set Variable    ${Customer_Details}[Address]

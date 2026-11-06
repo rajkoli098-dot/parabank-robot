@@ -5,8 +5,6 @@ Test Setup        Go To    ${URL}
 Suite Teardown    Close All Browsers
 
 *** Variables ***
-${URL}    https://parabank.parasoft.com/parabank/index.htm
-${Browser}    chrome
 ${Title}    ParaBank | Welcome | Online Banking
 
 

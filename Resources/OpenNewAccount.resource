@@ -1,5 +1,5 @@
 *** Settings ***
-
+Resource    ../Resources/Common.resource
 
 *** Keywords ***
 do something
