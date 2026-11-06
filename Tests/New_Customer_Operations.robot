@@ -10,7 +10,8 @@ Suite Setup    Open Browser    ${URL}    ${BROWSER}
 ${MESSAGE}    Your account was created successfully. You are now logged in.
 ${URL}    https://parabank.parasoft.com/parabank/index.htm
 ${BROWSER}    chrome
-${ERROR_MESSAGE}    Passwords did not match.
+${PASSWORD_ERROR_MESSAGE}    Passwords did not match.
+${USERNAME_ERROR_MESSAGE}    This username already exists.
 
 
 *** Test Cases ***
@@ -29,9 +30,18 @@ Log Out and Login Again using New Customer Credentials
     Accounts Overview of New Account Creation Count
     Log Out From New Customer Creation Page
 
-Error Scenario: Register with password and confirm that don't match
+Error Scenario: Register with Password and Confirm Password that don't match
     [Tags]    PasswordMismatch    E2E
     Resgister A New Customer
     Provide Confirm Password as Mismatch Value    Wrong_Pass
     Clicking On Register Button
-    Error should be appear on register page    ${ERROR_MESSAGE}
+    Error should be appear on register page    ${PASSWORD_ERROR_MESSAGE}
+
+Error Scenario: Register a username that already exists
+    [Tags]    SameUsername    E2E
+    Resgister A New Customer
+    Filling Customer Related All Details
+    Clicking On Register Button
+    Error should be appear on register page    ${USERNAME_ERROR_MESSAGE}
+
+

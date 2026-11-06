@@ -25,7 +25,7 @@ ${ACOOUNT_CREATED_MESSAGE_XPATH}    //div[@id='rightPanel']/P
 ${Username}
 ${Password}
 ${LOGOUT_XPATH}    //a[text()='Log Out']
-${PASSWORD_MISMATCH_ERROR_XPATH}    //td//span[@id='repeatedPassword.errors']
+${REGISTER_ERROR_XPATH}    //td//span[contains(@id,'errors')]
 
 
 
@@ -113,7 +113,7 @@ Provide Confirm Password as Mismatch Value
 
 Error should be appear on register page
     [Arguments]    ${ERROR_MESSAGE}
-    Wait Until Element Is Visible    ${PASSWORD_MISMATCH_ERROR_XPATH}    10s
-    ${Error}=    Get Text    ${PASSWORD_MISMATCH_ERROR_XPATH}
+    Wait Until Element Is Visible    ${REGISTER_ERROR_XPATH}    10s
+    ${Error}=    Get Text    ${REGISTER_ERROR_XPATH}
     Should Be Equal    ${ERROR_MESSAGE}    ${Error}
     Capture Page Screenshot
