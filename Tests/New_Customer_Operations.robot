@@ -1,9 +1,14 @@
 *** Settings ***
-Resource    ../Resources/HomeAndLogin.resource
-Resource    ../Resources/Register.resource
-Resource    ../Resources/AccountsOverview.resource
-Suite Setup    Open Browser    ${URL}    ${BROWSER}
-Suite Teardown    Close All Browsers
+Documentation       Registration tests: new customer, log in again, and two error cases.
+
+Resource            ../Resources/Common.resource
+Resource            ../Resources/HomeAndLogin.resource
+Resource            ../Resources/Register.resource
+Resource            ../Resources/AccountsOverview.resource
+
+Suite Setup         Open ParaBank
+Test Setup          Start From Logged Out Home Page
+Suite Teardown      Close All Browsers
 
 *** Variables ***
 ${MESSAGE}    Your account was created successfully. You are now logged in.
