@@ -17,3 +17,6 @@ __pycache__/
 # Secrets and personal config (Level 4)
 .env
 .robot.toml
+
+# Archives
+*.zip
