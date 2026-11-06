@@ -17,3 +17,6 @@ robotframework-requests
 
 # Parallel runs (Level 10)
 robotframework-pabot
+
+# Test data
+openpyxl

@@ -9,6 +9,7 @@ ${URL}    https://parabank.parasoft.com/parabank/index.htm
 ${Browser}    chrome
 ${Title}    ParaBank | Welcome | Online Banking
 
+
 *** Test Cases ***
 Log in with empty username and password
     [Tags]    negative
