@@ -22,7 +22,8 @@ ${ACOOUNT_CREATED_MESSAGE_XPATH}    //div[@id='rightPanel']/P
 ${Username}
 ${Password}
 ${LOGOUT_XPATH}    //a[text()='Log Out']
-${REGISTER_ERROR_XPATH}    //td//span[contains(@id,'errors')]
+${CONFIRM_ERROR_XPATH}    //span[@id='repeatedPassword.errors']
+${USERNAME_ERROR_XPATH}    //span[@id='customer.username.errors']
 
 
 
@@ -65,7 +66,7 @@ Clicking On Register Button
     Click Element    ${REGISTER_BUTTON_XPATH}
 
 Account Creation Successfull Message
-    [Arguments]    ${MSG}
+    [Arguments]    ${username}    ${MSG}
     Wait Until Element Is Visible    ${WELCOME_USERNAME_XPATH}
     ${Welcome_Username}=    Get Text    ${WELCOME_USERNAME_XPATH}
     Log    ${Welcome_Username}    INFO
@@ -108,9 +109,42 @@ Provide Confirm Password as Mismatch Value
     Input Password    ${CONFIRM_PASSWORD_XPATH}    ${Confirm_Mismatch}
 
 
-Error should be appear on register page
-    [Arguments]    ${ERROR_MESSAGE}
-    Wait Until Element Is Visible    ${REGISTER_ERROR_XPATH}    10s
-    ${Error}=    Get Text    ${REGISTER_ERROR_XPATH}
-    Should Be Equal    ${ERROR_MESSAGE}    ${Error}
-    Capture Page Screenshot
+Register Page Should Show Confirm Error
+    [Documentation]    Fails unless the Confirm field shows exactly the expected error text.
+    [Arguments]    ${expected}
+    Wait Until Element Is Visible    ${CONFIRM_ERROR_XPATH}
+    Element Text Should Be    ${CONFIRM_ERROR_XPATH}    ${expected}
+
+Register Page Should Show Username Error
+    [Documentation]    Fails unless the Username field shows exactly the expected error text.
+    [Arguments]    ${expected}
+    Wait Until Element Is Visible    ${USERNAME_ERROR_XPATH}
+    Element Text Should Be    ${USERNAME_ERROR_XPATH}    ${expected}
+
+Fill Registration Form
+    [Documentation]    Types the whole sign-up form from one customer dictionary. Does not submit.
+    #Keys used: First Name, Last Name, Address, City, State, Zip Code, Phone #, SSN,
+    #Username, Password, Confirm.
+    [Arguments]    ${customer}
+    Fill Personal Details    ${customer}
+    Fill Login Details    ${customer}
+
+Fill Personal Details
+    [Documentation]    Types name, address, phone and SSN from the customer dictionary.
+    [Arguments]    ${customer}
+    Wait Until Element Is Visible    ${FIRST_NAME_XPATH}
+    Input Text    ${FIRST_NAME_XPATH}    ${customer}[First Name]
+    Input Text    ${LAST_NAME_XPATH}    ${customer}[Last Name]
+    Input Text    ${ADDRESS_XPATH}    ${customer}[Address]
+    Input Text    ${CITY_XPATH}    ${customer}[City]
+    Input Text    ${STATE_XPATH}    ${customer}[State]
+    Input Text    ${ZIP_CODE_XPATH}    ${customer}[Zip Code]
+    Input Text    ${PHONE_XPATH}    ${customer}[Phone #]
+    Input Text    ${SSN_XPATH}    ${customer}[SSN]
+
+Fill Login Details
+    [Documentation]    Types username, password and confirm password from the customer dictionary.
+    [Arguments]    ${customer}
+    Input Text    ${USERNAME_XPATH}    ${customer}[Username]
+    Input Password    ${PASSWORD_XPATH}    ${customer}[Password]
+    Input Password    ${CONFIRM_PASSWORD_XPATH}    ${customer}[Confirm]
