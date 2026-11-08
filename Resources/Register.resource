@@ -5,7 +5,7 @@ Resource            ../Resources/Common.resource
 
 
 *** Variables ***
-${RGISTER_XPATH}                    //a[text()='Register']
+${REGISTER_LINK_XPATH}                    //a[text()='Register']
 ${REGISTER_TITLE_XPATH}             //h1[@class='title']
 ${FIRST_NAME_XPATH}                 //input[contains(@id,'firstName')]
 ${LAST_NAME_XPATH}                  //input[contains(@id,'lastName')]
@@ -20,19 +20,17 @@ ${PASSWORD_XPATH}                   //input[contains(@id,'password')]
 ${CONFIRM_PASSWORD_XPATH}           //input[contains(@id,'repeatedPassword')]
 ${REGISTER_BUTTON_XPATH}            //input[contains(@value,'Register')]
 ${WELCOME_USERNAME_XPATH}           //div[@id='rightPanel']/h1[@class='title']
-${ACOOUNT_CREATED_MESSAGE_XPATH}    //div[@id='rightPanel']/P
+${ACCOUNT_CREATED_MESSAGE_XPATH}    //div[@id='rightPanel']/p
 ${CONFIRM_ERROR_XPATH}              //span[@id='repeatedPassword.errors']
 ${USERNAME_ERROR_XPATH}             //span[@id='customer.username.errors']
 ${ACCOUNT_CREATED_TEXT}             Your account was created successfully. You are now logged in.
-${Username}
-${Password}
 
 
 *** Keywords ***
 Open Register Page
     [Documentation]    Clicks Register and waits for the sign-up form.
-    Wait Until Element Is Visible    ${RGISTER_XPATH}
-    Click Element    ${RGISTER_XPATH}
+    Wait Until Element Is Visible    ${REGISTER_LINK_XPATH}
+    Click Element    ${REGISTER_LINK_XPATH}
     Wait Until Element Is Visible    ${REGISTER_TITLE_XPATH}
     Element Text Should Be    ${REGISTER_TITLE_XPATH}    Signing up is easy!
 
@@ -75,7 +73,7 @@ Register Page Should Show Welcome For
     Wait Until Element Is Visible    ${WELCOME_USERNAME_XPATH}
     ${welcome}=    Get Text    ${WELCOME_USERNAME_XPATH}
     Should End With    ${welcome}    ${username}
-    Element Text Should Be    ${ACOOUNT_CREATED_MESSAGE_XPATH}    ${ACCOUNT_CREATED_TEXT}
+    Element Text Should Be    ${ACCOUNT_CREATED_MESSAGE_XPATH}    ${ACCOUNT_CREATED_TEXT}
 
 Register Page Should Show Confirm Error
     [Documentation]    Fails unless the Confirm field shows exactly the expected error text.
