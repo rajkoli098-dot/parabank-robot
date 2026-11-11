@@ -5,14 +5,14 @@ output-dir = "results"     # replaces -d results
 # Profile 1: worked example
 [profiles.dev]
 description = "Chrome with a window"
-variables = { BROWSER = "chrome" }
+variables = { BROWSER = "edge" }
 
 # Profile 2: your turn
 [profiles.headless]
 description = "Chrome without Winddow"
-variables = { BROWSER = "headlesschrome" }
+variables = { BROWSER = "edge" }
 
 # Profile 3: your turn (two settings this time)
 [profiles.ci]
 description = "Chrome without Winddow + Shorter Timeout"
-variables = { BROWSER = "headlesschrome", TIMEOUT = "5s"}
+variables = { BROWSER = "edge", TIMEOUT = "5s"}

@@ -1,3 +1,3 @@
 URL = "https://parabank.parasoft.com/parabank/index.htm"
-BROWSER = "chrome"
+BROWSER = "edge"
 TIMEOUT = "10s"

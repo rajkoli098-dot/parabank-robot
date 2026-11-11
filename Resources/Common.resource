@@ -6,6 +6,7 @@ Library             String
 Variables            ../Config/settings.py
 Library             SeleniumLibrary    ${TIMEOUT}
 Library             ../Libraries/excel_utils.py
+Library             FakerLibrary    locale=en_US
 
 
 

@@ -11,6 +11,7 @@ Register New Customer From Excel
     ...    saves the username and password back into the Excel row, and returns both.
     [Arguments]    ${row_id}
     &{customer}=    Get Customer Data    ${row_id}
+    Add Fake Personal Details    ${customer}
     Open Register Page
     Fill Registration Form    ${customer}
     Submit Registration
@@ -39,3 +40,26 @@ Make Unique Username
     ${seconds}=    Get Time    epoch
     ${digits}=    Generate Random String    3    [NUMBERS]
     RETURN    raj${seconds}${digits}
+
+Add Fake Personal Details
+    [Documentation]    Replaces the fixed Excel personal details with fresh fake ones.
+    [Arguments]    ${customer}
+    ${first}=    FakerLibrary.First Name
+    ${last}=    FakerLibrary.Last Name
+    ${street}=    FakerLibrary.Street Address
+    ${city}=    FakerLibrary.City
+    ${state}=    FakerLibrary.State
+    ${zipcode}=    FakerLibrary.Zipcode
+    ${phone}=    FakerLibrary.Basic Phone Number
+    ${ssn}=    FakerLibrary.Ssn
+    # your 6 lines: one per field
+    Set To Dictionary    ${customer}
+    ...    First Name=${first}
+    ...    Last Name=${last}
+    ...    Address=${street}
+    ...    City=${city}
+    ...    State=${state}
+    ...    Zip Code=${zipcode}
+    ...    Phone #=${phone}
+    ...    SSN=${ssn}
+    # your 6 lines: one pair per field
