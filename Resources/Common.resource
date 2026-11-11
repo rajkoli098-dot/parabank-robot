@@ -3,13 +3,13 @@ Documentation       Shared settings for every suite: the libraries, the site and
 
 Library             Collections
 Library             String
-Library             SeleniumLibrary    timeout=10s
+Variables            ../Config/settings.py
+Library             SeleniumLibrary    ${TIMEOUT}
 Library             ../Libraries/excel_utils.py
 
 
+
 *** Variables ***
-${URL}              https://parabank.parasoft.com/parabank/index.htm
-${BROWSER}          chrome
 ${CUSTOMER_FILE}    ${CURDIR}/../Test Data/customer_data.xlsx
 ${SHEET}            Sheet1
 

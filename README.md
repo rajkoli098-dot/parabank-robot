@@ -30,7 +30,10 @@ parabank-robot/
 ├── Tests/             # All The Tests Suites
 │   └── <subfolder>/      # <what lives here>
 ├── Resources/             # One Resource File is One Web Page
+├── Config/
+    └── settings.py        # Py file to stored variables
 └── results/              # run output, ignored by Git
+
 ```
 
 ## Why this structure

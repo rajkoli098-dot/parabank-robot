@@ -1,7 +1,7 @@
 *** Settings ***
-Documentation       Transfer Funds page: move an amount from one account to another.
+Documentation    Transfer Funds page: move an amount from one account to another.
 
-Resource            ../Resources/Common.resource
+Resource    ../Resources/Common.resource
 
 
 *** Variables ***

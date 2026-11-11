@@ -1,11 +1,11 @@
 *** Settings ***
-Documentation       Register page: open the sign-up form, fill it, submit it, and check the result.
+Documentation    Register page: open the sign-up form, fill it, submit it, and check the result.
 
-Resource            ../Resources/Common.resource
+Resource    ../Resources/Common.resource
 
 
 *** Variables ***
-${REGISTER_LINK_XPATH}                    //a[text()='Register']
+${REGISTER_LINK_XPATH}    //a[text()='Register']
 ${REGISTER_TITLE_XPATH}             //h1[@class='title']
 ${FIRST_NAME_XPATH}                 //input[contains(@id,'firstName')]
 ${LAST_NAME_XPATH}                  //input[contains(@id,'lastName')]
