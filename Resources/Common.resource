@@ -2,6 +2,7 @@
 Documentation       Shared settings for every suite: the libraries, the site and the test data file.
 
 Library             Collections
+Library             DateTime
 Library             String
 Variables            ../Config/settings.py
 Library             SeleniumLibrary    ${TIMEOUT}

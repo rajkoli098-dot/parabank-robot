@@ -12,6 +12,7 @@ ${LOGOUT_BUTTON_XPATH}              //div[@id='leftPanel']//a[text()='Log Out']
 ${MENU_OPEN_NEW_ACCOUNT_XPATH}      //div[@id='leftPanel']//a[text()='Open New Account']
 ${MENU_ACCOUNTS_OVERVIEW_XPATH}     //div[@id='leftPanel']//a[text()='Accounts Overview']
 ${MENU_TRANSFER_FUNDS_XPATH}        //div[@id='leftPanel']//a[text()='Transfer Funds']
+${NEWS_DATE_XPATH}                  //h4[text()='Latest News']/following-sibling::ul/li[@class='captionthree']
 
 
 *** Keywords ***
@@ -45,3 +46,10 @@ Navigate To Accounts Overview
 Navigate To Transfer Funds
     [Documentation]    Opens the Transfer Funds page from the left menu.
     Click Element    ${MENU_TRANSFER_FUNDS_XPATH}
+
+Latest News Should Be Today
+    [Documentation]    The Date under "Latest News" equals today's date, in the Site Format.
+    Wait Until Element Is Visible    ${NEWS_DATE_XPATH}
+    ${site_date} =    Get Text    ${NEWS_DATE_XPATH}
+    ${today} =    Get Current Date    result_format=%m/%d/%Y
+    Should Be Equal    ${site_date}    ${today}
