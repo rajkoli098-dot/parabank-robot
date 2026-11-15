@@ -2,9 +2,12 @@
 Documentation       Open New Account page: choose a type and a funding account, then open the account.
 
 Resource            ../Resources/Common.resource
+Resource            ../Resources/AccountsOverview.resource
 
 
 *** Variables ***
+${OPEN_ACCOUNT_LINK_XPATH}          //a[text()='Open New Account']
+${OPEN_ACCOUNT_TITLE_XPATH}         //h1[@class='title' and text()='Open New Account']
 ${ACCOUNT_TYPE_XPATH}               //select[@id='type']
 ${FUNDING_ACCOUNT_XPATH}            //select[@id='fromAccountId']
 ${FUNDING_ACCOUNT_OPTIONS_XPATH}    //select[@id='fromAccountId']/option
@@ -14,6 +17,12 @@ ${NEW_ACCOUNT_NUMBER_XPATH}         //a[@id='newAccountId']
 
 
 *** Keywords ***
+Open New Account Link
+    [Documentation]    Clicks Open New Account Link
+    Wait Until Element Is Visible    ${OPEN_ACCOUNT_LINK_XPATH}
+    Click Element    ${OPEN_ACCOUNT_LINK_XPATH}
+    Wait Until Element Is Visible    ${OPEN_ACCOUNT_TITLE_XPATH}
+
 Choose Account Type
     [Documentation]    Picks CHECKING or SAVINGS in the account type list.
     [Arguments]    ${account_type}
@@ -37,3 +46,13 @@ New Account Should Be Opened
     Element Text Should Be    ${ACCOUNT_OPENED_TITLE_XPATH}    Account Opened!
     ${new_account}=    Get Text    ${NEW_ACCOUNT_NUMBER_XPATH}
     RETURN    ${new_account}
+
+New Savings Account Creation Using Primary Account
+    [Documentation]    Creates the New SAVINGS Account using Primary Account and Return the New Account Number.
+    @{Accounts}=    Accounts Overview Should List Accounts    1
+    Open New Account Link
+    Choose Account Type    SAVINGS
+    Choose Funding Account    ${Accounts}[0]
+    Submit New Account
+    ${New_Account_Number}=    New Account Should Be Opened
+    RETURN    ${New_Account_Number}
