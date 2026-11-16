@@ -107,7 +107,21 @@ Compare Before And After Transaction Amounts
     ${Before_To_Balance}=      Set Variable    ${Before_Transfer}[${To_Account}][Balance]
     ${After_From_Balance}=     Set Variable    ${After_Transfer}[${From_Account}][Balance]
     ${After_To_Balance}=       Set Variable    ${After_Transfer}[${To_Account}][Balance]
-    ${Expected_After_From_Balance}=    Evaluate    ${Before_From_Balance} - ${Amount}
-    ${Expected_After_To_Balance}=      Evaluate    ${Before_To_Balance} + ${Amount}
-    Should Be Equal As Numbers    ${After_From_Balance}    ${Expected_After_From_Balance}
-    Should Be Equal As Numbers    ${After_To_Balance}    ${Expected_After_To_Balance}
+    ${Before_From_Balance_Number}=    Remove String And Convert To The Number    ${Before_From_Balance}    $
+    ${Before_To_Balance_Number}=    Remove String And Convert To The Number    ${Before_To_Balance}    $
+    ${After_From_Balance_Number}=    Remove String And Convert To The Number    ${After_From_Balance}    $
+    ${After_To_Balance_Number}=    Remove String And Convert To The Number    ${After_To_Balance}     $
+    ${Expected_After_From_Balance}=    Evaluate    ${Before_From_Balance_Number} - ${Amount}
+    ${Expected_After_To_Balance}=      Evaluate    ${Before_To_Balance_Number} + ${Amount}
+    Should Be Equal As Numbers    ${After_From_Balance_Number}    ${Expected_After_From_Balance}
+    Should Be Equal As Numbers    ${After_To_Balance_Number}    ${Expected_After_To_Balance}
+
+Remove String And Convert To The Number
+    [Documentation]    Removing the Currency Sign and Converted Into Numbers
+    ...    ${OBJ}=String To Be Used For Modify
+    ...    ${String_To_Be_Removed}=From ${OBJ} which string to Removed
+    ...    Example: $145.05 will be Return as 145.05
+    [Arguments]    ${OBJ}    ${String_To_Be_Removed}
+    ${String}=    Remove String    ${OBJ}    ${String_To_Be_Removed}
+    ${Number}=    Convert To Number    ${String}
+    RETURN    ${Number}
