@@ -8,6 +8,7 @@ Resource            ../Resources/Common.resource
 ${ACCOUNTS_OVERVIEW_LINK_XPATH}    //a[text()='Accounts Overview']
 ${ACCOUNTS_OVERVIEW_XPATH}         //div[@id='showOverview']//h1[contains(@class,'title')]
 ${ACCOUNT_LIST_XPATH}              //table[@id='accountTable']//tbody//tr//a
+${ACCOUNT_OVERVIEW_ROW_XPATH}    //td/a[text()='<<>>']/ancestor::tr/td
 
 
 *** Keywords ***
