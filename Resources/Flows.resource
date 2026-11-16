@@ -43,7 +43,7 @@ Make Unique Username
 
 Add Fake Personal Details
     [Documentation]    Replaces the fixed Excel personal details with fresh fake ones.
-    [Arguments]    ${customer}
+    [Arguments]    ${customer}=None
     ${first}=    FakerLibrary.First Name
     ${last}=    FakerLibrary.Last Name
     ${street}=    FakerLibrary.Street Address
@@ -63,3 +63,31 @@ Add Fake Personal Details
     ...    Phone #=${phone}
     ...    SSN=${ssn}
     # your 6 lines: one pair per field
+
+Get Account Numbers
+    [Documentation]    Gives you Account Numbers
+    [Arguments]    ${Before_Transfer}
+    @{Numbers1}=    Get Dictionary Keys    ${Before_Transfer}
+    ${Primary_Account}=    Set Variable    ${Before_Transfer}[${Numbers1}[0]][Account_Number]
+    ${Secondary_Account}=    Set Variable    ${Before_Transfer}[${Numbers1}[1]][Account_Number]
+    RETURN    ${Primary_Account}    ${Secondary_Account}
+
+Remove String And Convert To The Number
+    [Documentation]    Removing the Currency Sign and Converted Into Numbers
+    ...    ${OBJ}=String To Be Used For Modify
+    ...    ${String_To_Be_Removed1}=From ${OBJ} which string to Removed
+    ...    Example: $145.05 will be Return as 145.05
+    [Arguments]    ${OBJ}    ${String_To_Be_Removed1}    ${String_To_Be_Removed2}=None
+    ${String}=    Remove String    ${OBJ}    ${String_To_Be_Removed1}    ${String_To_Be_Removed2}
+    ${Number}=    Convert To Number    ${String}
+    RETURN    ${Number}
+
+Compare Before And After Bill Payment Amounts
+    [Documentation]    Compares the balance of before and after a Bill Payment, ensuring correct amounts were debited.
+    [Arguments]    ${Before_Transfer}    ${After_Transfer}    ${Amount}    ${From_Account}
+    ${Before_From_Balance}=    Set Variable    ${Before_Transfer}[${From_Account}][Balance]
+    ${After_From_Balance}=     Set Variable    ${After_Transfer}[${From_Account}][Balance]
+    ${Before_From_Balance_Number}=    Remove String And Convert To The Number    ${Before_From_Balance}    $    ,
+    ${After_From_Balance_Number}=    Remove String And Convert To The Number    ${After_From_Balance}    $    ,
+    ${Expected_After_From_Balance}=    Evaluate    ${Before_From_Balance_Number} - ${Amount}
+    Should Be Equal As Numbers    ${After_From_Balance_Number}    ${Expected_After_From_Balance}

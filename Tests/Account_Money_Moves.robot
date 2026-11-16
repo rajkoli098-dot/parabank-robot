@@ -2,6 +2,7 @@
 Documentation            End to End Banking on Parabank with New Saving Account,Account Transfers, Balance Check.
 
 Resource            ../Resources/AccountsOverview.resource
+Resource            ../Resources/BillPay.resource
 Resource            ../Resources/Common.resource
 Resource            ../Resources/HomeAndLogin.resource
 Resource            ../Resources/Register.resource
@@ -18,7 +19,9 @@ Test Tags           e2eAccounts
 
 *** Variables ***
 ${ROW_ID}                       3
-${Amount}                       50.05
+${AMOUNT}                       50.05
+${PAYEE_AMOUNT}                 14.29
+${PAYEE_ACCOUNT}                46457
 
 
 *** Test Cases ***
@@ -36,11 +39,20 @@ Transfer An Amount Between Your Two Accounts
     [Documentation]    Transfer Amounts between your accounts and check the exact balance credited & debited.
     [Tags]    TransferAmount
     &{Before_Transfer}=    Before Transfer Amounts Accounts Balance And Total Balance    ${ROW_ID}
-    @{Numbers1}=    Get Dictionary Keys    ${Before_Transfer}
-    ${Primary_Account}=    Set Variable    ${Before_Transfer}[${Numbers1}[0]][Account_Number]
-    ${Secondary_Account}=    Set Variable    ${Before_Transfer}[${Numbers1}[1]][Account_Number]
+    ${Primary_Account}    ${Secondary_Account}=    Get Account Numbers    ${Before_Transfer}
     &{After_Transfer}=    After Transfer Amounts Accounts Balance And Total Balance    ${Amount}    ${Primary_Account}    ${Secondary_Account}
     Compare Before And After Transaction Amounts    ${Before_Transfer}    ${After_Transfer}    ${Amount}    ${Primary_Account}    ${Secondary_Account}
 
-
-
+Pay A Any Bill And Check The Account Balance
+    [Documentation]    Pay a bill and After Payment checks the Account Balance
+    [Tags]    PayBill
+    &{Before_Transfer}=    Before Transfer Amounts Accounts Balance And Total Balance    ${ROW_ID}
+    ${Primary_Account}    ${Secondary_Account}=    Get Account Numbers    ${Before_Transfer}
+    Click On Bill Pay Link
+    Enter Payee Information
+    Enter Payee Account, Payee Amount And From Account    ${Payee_Account}    ${Payee_Amount}    ${Primary_Account}
+    Send Payment
+    Bill Payment Completion    ${Payee_Amount}    ${Primary_Account}
+    &{After_Bill_Payment}=    Get Account Balance
+    Compare Before And After Bill Payment Amounts    ${Before_Transfer}    ${After_Bill_Payment}
+    ...    ${Payee_Amount}    ${Primary_Account}
