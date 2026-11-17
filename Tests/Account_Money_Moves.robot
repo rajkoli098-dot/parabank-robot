@@ -22,6 +22,7 @@ ${ROW_ID}                       3
 ${AMOUNT}                       50.05
 ${PAYEE_AMOUNT}                 14.29
 ${PAYEE_ACCOUNT}                46457
+${CONFIRM_PAYEE_ACCOUNT}        46457
 
 
 *** Test Cases ***
@@ -50,9 +51,21 @@ Pay A Any Bill And Check The Account Balance
     ${Primary_Account}    ${Secondary_Account}=    Get Account Numbers    ${Before_Transfer}
     Click On Bill Pay Link
     Enter Payee Information
-    Enter Payee Account, Payee Amount And From Account    ${Payee_Account}    ${Payee_Amount}    ${Primary_Account}
+    Enter Payee Account, Payee Amount And From Account    ${Payee_Account}    ${Confirm_Payee_Account}
+    ...    ${Payee_Amount}    ${Primary_Account}
     Send Payment
     Bill Payment Completion    ${Payee_Amount}    ${Primary_Account}
     &{After_Bill_Payment}=    Get Account Balance
     Compare Before And After Bill Payment Amounts    ${Before_Transfer}    ${After_Bill_Payment}
     ...    ${Payee_Amount}    ${Primary_Account}
+
+Negative Scenario Bill Pay With Empty Field And Mismatch Accoun Number
+    [Documentation]    Throws Error and Give Error List with Field Name.
+    [Tags]    NegativePayBill
+    ${username}    ${password}=    Register New Customer From Excel    ${ROW_ID}
+    Log Out
+    Log In As    ${username}    ${password}
+    Click On Bill Pay Link
+    Fill Mismatch Account And Confirm Account    ${PAYEE_ACCOUNT}    00000
+    Send Payment
+    Error Recieved For Each Field

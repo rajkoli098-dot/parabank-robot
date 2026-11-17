@@ -23,6 +23,9 @@ ${SEND_PAYMENT_BUTTON_XPATH}          //input[@class='button' and @value='Send P
 ${BILL_PAYMENT_TITLE_XPATH}           //h1[text()='Bill Payment Complete']
 ${AMOUNT_TEXT_XPATH}                  //span[@id='amount']
 ${ACCOUNT_TEXT_XPATH}                 //span[@id='fromAccountId']
+${VALIDATION_ERROR_XPATH}             //span[contains(@id,'validationModel') and not(@style='display:none')]
+${EMPTY_FIELD_XPATH}                  //span[contains(@id,'validationModel') and not(@style='display:none')]/ancestor
+...                                   ::tr/td/b
 
 *** Keywords ***
 Click On Bill Pay Link
@@ -38,9 +41,9 @@ Enter Payee Information
 
 Enter Payee Account, Payee Amount And From Account
     [Documentation]    Fills the Payee Account, Amount and Select the Account from which Bill will be pay.
-    [Arguments]    ${Payee_Account}    ${Payee_Amount}    ${Primary_Account}
+    [Arguments]    ${Payee_Account}    ${Confirm_Payee_Account}    ${Payee_Amount}    ${Primary_Account}
     Input Text    ${INPUT_ACCOUNT_NUMBER_XPATH}    ${Payee_Account}
-    Input Text    ${INPUT_VERIFY_ACCOUNT_XPATH}    ${Payee_Account}
+    Input Text    ${INPUT_VERIFY_ACCOUNT_XPATH}    ${Confirm_Payee_Account}
     Input Text    ${INPUT_AMOUNT_XPATH}     ${Payee_Amount}
     Wait Until Element Is Visible    ${BILL_FROM_ACCOUNT_OPTIONS_XPATH}
     Select From List By Label    ${BILL_FROM_ACCOUNT_XPATH}    ${Primary_Account}
@@ -89,3 +92,25 @@ Fill Payee Details
     Input Text    ${INPUT_STATE_XPATH}    ${customer}[State]
     Input Text    ${INPUT_ZIPCODE_XPATH}    ${customer}[Zip Code]
     Input Text    ${INPUT_PHONENUMBER_XPATH}    ${customer}[Phone #]
+
+Fill Mismatch Account And Confirm Account
+    [Documentation]    Fills the mismatch value in Account and Confirm Account Field
+    [Arguments]    ${Payee_Account}    ${Confirm_Payee_Account}
+    Input Text    ${INPUT_ACCOUNT_NUMBER_XPATH}    ${Payee_Account}
+    Input Text    ${INPUT_VERIFY_ACCOUNT_XPATH}    ${Confirm_Payee_Account}
+
+
+Error Recieved For Each Field
+    [Documentation]    Maps field names with their validation error messages.
+    &{All_Errors}=    Create Dictionary
+    @{Errors}=    Get WebElements    ${VALIDATION_ERROR_XPATH}
+    @{Fields}=    Get WebElements    ${EMPTY_FIELD_XPATH}
+    ${Field_Count}=    Get Length    ${Fields}
+    ${Error_Count}=    Get Length    ${Errors}
+    Should Be Equal As Integers    ${Field_Count}    ${Error_Count}
+    FOR    ${Field}    ${Error}    IN ZIP    ${Fields}    ${Errors}
+        ${Field_Name}=    Get Text    ${Field}
+        ${Error_Message}=    Get Text    ${Error}
+        Set To Dictionary    ${All_Errors}    ${Field_Name}    ${Error_Message}
+    END
+    Log    ${All_Errors}
